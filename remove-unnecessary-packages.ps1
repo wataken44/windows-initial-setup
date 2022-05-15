@@ -28,5 +28,10 @@ $packages = @(
 
 foreach ($pkg in $packages) {
     Write-Output $pkg
+    Write-Output "Get-AppxProvisionedPackage"
+    Get-AppxProvisionedPackage -Online | Where-Object {$_.PackageName -like $pkg} | Select DisplayName
+    Write-Output "Get-AppxPackage -AllUsers"
     Get-AppxPackage -AllUsers $pkg | Remove-AppxPackage -AllUsers
+    Write-Output "Get-AppxPackage"
+    Get-AppxPackage $pkg | Remove-AppxPackage
 }
